@@ -3,6 +3,5 @@ from . import views
 
 urlpatterns = [
     path('',views.mainPage,name='mainPage'),
-    path('add',views.kek,name='kek'),
-    path('load',views.load,name='load'),
+    path('loadUserData',views.loadUserData,name='loadUserData'),
 ]

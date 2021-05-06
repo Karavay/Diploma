@@ -14,17 +14,22 @@ def mainPage(request):
 
     amountOfUsers = UserData.objects.all().count()
 
-    moskow = UserData.objects.filter(city_id = '1').count()
-    st_petersburg = UserData.objects.filter(city_id = '2').count()
+    cities = {}
 
-    return render(request,'mainPage.html',{'userData':userData,'all':amountOfUsers,'moskow':moskow,'st_petersburg':st_petersburg})
-# {'dataList':dataList,}
+    for i in range(1,100):
+        URL = 'https://api.vk.com/method/database.getCitiesById'
+        PARAMS = {'city_ids':i,'v':5.52,'access_token':'b5b6d031c6fe67acac183a1fa8238ac532130d82355bfb8dff764455d43309c35b1fac9aa64b3e70d657d'}
+        if UserData.objects.filter(city_id = i).count() > 0:
+            req = requests.get(url = URL,params = PARAMS)
+            requestData = req.json()
+            cities[UserData.objects.filter(city_id = i).count()] = requestData.get('response')[0].get('title')
+            print(requestData)
+            print(cities)
 
-# TemplateResponse(request,'mainPage.html',{'dataList':dataList,})
-# t = TemplateResponse(request,'mainPage.html',{'script':fuuu})
-# t.render()
-# return t
-def load(param=100):
+
+    return render(request,'mainPage.html',{'userData':userData,'all':amountOfUsers,'cities':cities})
+
+def loadOneUserData(param):# function that makes api request,param = id of vk user,we use this func in another function
 
     URL = 'https://api.vk.com/method/users.get'
 
@@ -34,7 +39,7 @@ def load(param=100):
 
     requestData = req.json()
     print(requestData)
-    if requestData is not None or requestData.get('response')[0].get('first_name') != 'DELETED' :
+    if requestData is not None and requestData.get('response')[0].get('first_name') != 'DELETED' :
         new_data = UserData()
         new_data.id = requestData.get('response')[0].get('id')
         new_data.first_name = requestData.get('response')[0].get('first_name')
@@ -59,69 +64,14 @@ def load(param=100):
         new_data.save()
 
 
-def loadData():
-    # t = TemplateResponse(request,'mainPage.html',{})
-    URL = 'https://api.vk.com/method/users.get'
+def loadUserData(request):
 
-    PARAMS = {'fields':'sex,status,city,bdate,about,activities,books,career,connections,contacts,country,domain,education,home_town','user_id':1,'v':5.52,'access_token':'b5b6d031c6fe67acac183a1fa8238ac532130d82355bfb8dff764455d43309c35b1fac9aa64b3e70d657d'}
-
-    # PARAMS['user_id'] += 1
-    # req = requests.get(url = URL,params = PARAMS)
-    #
-    # requestData = req.json()
-
-    dataList = []
-
-    # def add() :
-    #     for i in range(4):
-    #         req = requests.get(url = URL,params = PARAMS)
-    #
-    #         requestData = req.json()
-    #
-    #         if not requestData.get('response')[0].get('deactivated') :
-    #             dataList.append(requestData)
-    #             PARAMS['user_id'] += 1
-    #
-    # set_interval(add,1)
-
-    # for i in range(10):
-    #     req = requests.get(url = URL,params = PARAMS)
-    #
-    #     requestData = req.json()
-    #
-    #     if requestData.get('response')[0].get('first_name') != 'DELETED' :
-    #         dataList.append(requestData)
-    #         time.sleep(1)
-    #
-    #     PARAMS['user_id'] += 1
-
-    for i in range(10,20):
-        set_interval(load(i),1)
-        PARAMS['user_id'] += 1
-
-    #a = requestData.get('response')[0].get('first_name') # получение данных из переменной
-    # PARAMS['user_id'] = 10 изменение данных переменной
-    # b = PARAMS.get('user_id') получение данных
-
-def p():
-    print('kek')
-def kek(request):
-    # print('kek')
     s = sched.scheduler(time.time,time.sleep)
     user_id = 1
+
     while True:
-        s.enter(1,1,load,(user_id,))
+        s.enter(1,1,loadOneUserData,(user_id,))
         s.run()
         user_id += 1
-        # set_interval(p,1,i)
-    return redirect('mainPage')
 
-def lol():
-    # print('kek')
-    s = sched.scheduler(time.time,time.sleep)
-    user_id = 1
-    while user_id <20   :
-        s.enter(1,1,load,(user_id,))
-        s.run()
-        user_id += 1
-        # set_interval(p,1,i)
+    return redirect('mainPage')

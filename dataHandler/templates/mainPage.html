@@ -4,24 +4,19 @@
 {% endblock %}
 
 {% block content %}
-  <!-- {{requestData}}
-  {{req}}
-  {{a}}
-  {{b}} -->
-    <form action="{% url 'kek' %}" method="post">
+    <form action="{% url 'loadUserData' %}" method="post">
       {% csrf_token %}
       <button>get data</button>
-    </form>
-    <form action="{% url 'load' %}" method="post">
-      {% csrf_token %}
-      <button>load data )))</button>
     </form>
     {% for i in userData %}
       {{i.first_name}}
       <br>
-  {% endfor %}
-  <p>amount of users in db:{{all}}</p>
-  <p>from Moskow: {{moskow}}</p>
-  <p>from St Petersburg: {{st_petersburg}}</p>
+    {% endfor %}
+    {% for i,j in cities.items %}
+      <p>amount of users in {{j}}:{{i}}</p>
+    {% empty %}
+        :(
+    {% endfor %}
+
 
 {% endblock %}
