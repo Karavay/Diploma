@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+  Data analyser ^_^
+{% endblock %}
+
+{% block content %}
+  <!-- {{requestData}}
+  {{req}}
+  {{a}}
+  {{b}} -->
+    <form action="{% url 'kek' %}" method="post">
+      {% csrf_token %}
+      <button>get data</button>
+    </form>
+    <form action="{% url 'load' %}" method="post">
+      {% csrf_token %}
+      <button>load data )))</button>
+    </form>
+    {% for i in userData %}
+      {{i.first_name}}
+      <br>
+  {% endfor %}
+  <p>amount of users in db:{{all}}</p>
+  <p>from Moskow: {{moskow}}</p>
+  <p>from St Petersburg: {{st_petersburg}}</p>
+
+{% endblock %}
