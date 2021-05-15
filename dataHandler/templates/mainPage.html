@@ -4,19 +4,47 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'loadUserData' %}" method="post">
-      {% csrf_token %}
-      <button>get data</button>
-    </form>
-    {% for i in userData %}
-      {{i.first_name}}
+    <div class="main">
+      <form action="{% url 'loadUserData' %}" method="post">
+        {% csrf_token %}
+        <button>Start loading data</button>
+        Начало загрузки данных пользователей Вконтакте в базу данных,процесс выолнения можно увидеть в командной строке(пока реализовано на кнопке)
+        <br>
+        Изменение данных в списке происходит по мере обновления страницы, аналогично и со статистикой
+      </form>
       <br>
-    {% endfor %}
-    {% for i,j in cities.items %}
-      <p>amount of users in {{j}}:{{i}}</p>
-    {% empty %}
-        :(
-    {% endfor %}
-
-
+      <form action="{% url 'visualisation' %}" method="post">
+        {% csrf_token %}
+        <button>user's statictic by cities<br></button>
+        статистика пользователей по городам
+      </form>
+      <br>
+      <form action="{% url 'visualisationCountries' %}" method="post">
+        {% csrf_token %}
+        <button>user's statictic by countries<br></button>
+        статистика пользователей по странам
+      </form>
+      <br>
+      <form action="{% url 'visualisationSex' %}" method="post">
+        {% csrf_token %}
+        <button>user's statictic by gender<br></button>
+        статистика пользователей по полу
+      </form>
+      <br>
+      <form action="{% url 'visualisationAge' %}" method="post">
+        {% csrf_token %}
+        <button>user's statictic by age<br></button>
+        статистика пользователей по возрасту
+      </form>
+      <br>
+      <div class="users_data">
+        {% for user in userData %}
+          <a href="{% url 'extendedInfo' pk=user.pk %}">
+            {{user.first_name}}
+          </a>
+          <br>
+        {% endfor %}
+      </div>
+      можно нажать на имя любого пользователя и вас перенаправит на страницу с подробной информацией о нём
+      {{bigId.first_name}}
 {% endblock %}

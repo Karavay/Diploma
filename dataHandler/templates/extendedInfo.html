@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+  id: {{userData.id}}
+  <br>
+  {% if userData.first_name %}
+    Имя: {{userData.first_name}}
+    <br>
+  {% endif %}
+  {% if userData.last_name %}
+    Фамилия: {{userData.last_name}}
+    <br>
+  {% endif %}
+  {% if userData.sex == 1 %}
+    Пол: Ж
+    <br>
+  {% elif  userData.sex == 2 %}
+    Пол: М
+    <br>
+  {% endif %}
+  {% if userData.bdate %}
+    Дата рождения: {{userData.bdate}}
+    <br>
+  {% endif %}
+  {% if userData.status %}
+    Статус: {{userData.status}}
+    <br>
+  {% endif %}
+  {% if userData.city_title %}
+    Город: {{userData.city_title}}
+    <br>
+  {% endif %}
+  {% if userData.country_title %}
+    Страна: {{userData.country_title}}
+  {% endif %}
+  {% if userData.about %}
+     О пользователе: {{userData.about}}
+    <br>
+  {% endif %}
+  {% if userData.activities %}
+     Увлечения: {{userData.activities}}
+    <br>
+  {% endif %}
+  {% if userData.books %}
+     Книги: {{userData.books}}
+    <br>
+  {% endif %}
+  {% if userData.career %}
+     Карьера: {{userData.career}}
+    <br>
+  {% endif %}
+  {% if userData.connections %}
+     Саязи: {{userData.connections}}
+    <br>
+  {% endif %}
+  {% if userData.contacts %}
+     Контакты: {{userData.contacts}}
+    <br>
+  {% endif %}
+  {% if userData.domain %}
+     Домен: {{userData.domain}}
+    <br>
+  {% endif %}
+  {% if userData.education %}
+     Образование: {{userData.education}}
+    <br>
+  {% endif %}
+  {% if userData.home_town %}
+     Родной город: {{userData.home_town}}
+    <br>
+  {% endif %}
+  {% if userData.received_date %}
+    Дата получения данных о пользователе: {{userData.received_date}}
+    <br>
+  {% endif %}
+{% endblock %}

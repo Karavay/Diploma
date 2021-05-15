@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  visualisation gender
+{% endblock %}
+
+{% block content %}
+  <div class="title">
+    <h1>user's gender</h1>
+  </div>
+  <div class="circleDiagram">
+    {% if circleDiagram %}
+      {{ circleDiagram | safe }}
+    {% else %}
+      <p>no data right now,load more</p>
+    {% endif%}
+  </div>
+  <div class="designations">
+    Designations: 1 - women, 2 - men, 3 - not defined
+  </div>
+{% endblock%}
