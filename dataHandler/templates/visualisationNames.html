@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  visualisation names
+{% endblock %}
+
+{% block content %}
+  <div class="title">
+    <h1>top 10 most spreaded male names in VK</h1>
+  </div>
+  <div class="circleDiagram">
+    {% if circleDiagramMen %}
+      {{ circleDiagramMen | safe }}
+    {% else %}
+      <p>no data right now,load more</p>
+    {% endif%}
+  </div>
+  <div class="title">
+    <h1>top 10 most spreaded female names in VK</h1>
+  </div>
+  <div class="circleDiagram">
+    {% if circleDiagramWomen %}
+      {{ circleDiagramWomen | safe }}
+    {% else %}
+      <p>no data right now,load more</p>
+    {% endif%}
+  </div>
+  <div class="menNamesStatistics">
+    <table class ="tableStatistics" border = '1'>
+      <caption>all names by male users </caption>
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+      </tr>
+      {% for i in menData %}
+        {% if i.total >= 2 %}
+          <tr>
+            <td>{{i.first_name}}</td>
+            <td>{{i.total}}</td>
+          </tr>
+        {% endif %}
+      {% empty %}
+        no data right now,load more
+      {% endfor %}
+    </table>
+  </div>
+  <br>
+  <div class="womenNamesStatistics">
+    <table class ="tableWomenNamesStatistics" border = '1'>
+      <caption>all names by female users </caption>
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+      </tr>
+      {% for i in womenData %}
+        {% if i.total >= 2 %}
+          <tr>
+            <td>{{i.first_name}}</td>
+            <td>{{i.total}}</td>
+          </tr>
+        {% endif %}
+      {% empty %}
+        no data right now,load more
+      {% endfor %}
+    </table>
+  </div>
+{% endblock%}

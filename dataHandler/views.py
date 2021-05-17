@@ -23,8 +23,9 @@ def mainPage(request):
 
     userData = UserData.objects.order_by('-received_date')[:1000]
 
+    allUsersInDB = UserData.objects.all().count()
 
-    return render(request,'mainPage.html',{'userData':userData,})
+    return render(request,'mainPage.html',{'userData':userData,'allUsersInDB':allUsersInDB,})
 
 def loadOneUserData(param):# function that makes api request,param = id of vk user,we use this func in another function
 
@@ -71,7 +72,7 @@ def loadOneUserData(param):# function that makes api request,param = id of vk us
 def loadUserData(request):
 
     s = sched.scheduler(time.time,time.sleep)
-    user_id = 77849
+    user_id = 234710
 
     while True:
         s.enter(0.5,0.5,loadOneUserData,(user_id,))
@@ -101,7 +102,7 @@ def visualisation(request):
         circleDiagram = px.pie(
             data_frame = df,
             values = 'total',#размер куска круга
-            names = 'city_title',
+            # names = 'city_title',
             color = 'city_title',
         )
         circleDiagram = circleDiagram.to_html()
@@ -119,7 +120,7 @@ def visualisationCountries(request):
         circleDiagram = px.pie(
             data_frame = df,
             values = 'total',#размер куска круга
-            names = 'country_title',
+            # names = 'country_title',иконки с обозначением справа
             color = 'country_title',
         )
         circleDiagram = circleDiagram.to_html()
@@ -136,8 +137,9 @@ def visualisationSex(request):
         circleDiagram = px.pie(
             data_frame = df,
             values = 'total',#размер куска круга
-            names = 'sex',
+            # names = 'sex',
             color = 'sex',
+            color_discrete_sequence = ['sky blue','pink']
         )
         circleDiagram = circleDiagram.to_html()
     else:
@@ -168,36 +170,78 @@ def visualisationAge(request):
                 age = calculate_age(j)
                 allUsersAge.append({'id':i.id,'age':age})
 
-    for i in range(200):
-        arr = [x['age'] for x in allUsersAge if x['age'] == i]
-        allUsersAgeFiltered.append({'age':i,'total':len(arr)})
+    if allUsersAge:
+        for i in range(200):
+            arr = [x['age'] for x in allUsersAge if x['age'] == i]
+            allUsersAgeFiltered.append({'age':i,'total':len(arr)})
 
-    allUsersAgeFilteredSorted = sorted(allUsersAgeFiltered,key=itemgetter('total'),reverse = True)
+        allUsersAgeFilteredSorted = sorted(allUsersAgeFiltered,key=itemgetter('total'),reverse = True)
 
-    allUsersAgeFiltered = [i for i in allUsersAgeFiltered if not (i['total'] == 0)]
+        allUsersAgeFiltered = [i for i in allUsersAgeFiltered if not (i['total'] == 0)]
 
 
-    if allUsersAgeFilteredSorted:
-        # df = pd.DataFrame(allUsersAge)
-        df = pd.DataFrame(allUsersAgeFilteredSorted[:5])
-        circleDiagram = px.pie(
+        if allUsersAgeFilteredSorted:
+            # df = pd.DataFrame(allUsersAge)
+            df = pd.DataFrame(allUsersAgeFilteredSorted[:5])
+            circleDiagram = px.pie(
+                data_frame = df,
+                values = 'total',#размер куска круга
+                names = 'age',
+                color = 'age',
+            )
+            circleDiagram = circleDiagram.to_html()
+        else:
+            circleDiagram = 'no data to analise yet'
+
+        if allUsersAgeFiltered:
+            df = pd.DataFrame(allUsersAgeFiltered)
+            fig = px.bar(df,x='age',y='total')
+            fig.update_xaxes(type='category')
+            fig = fig.to_html()
+
+    else:
+        allUsersAgeFilteredSorted = 'no data to analise yet'
+        circleDiagram = 'no data to analise yet'
+        fig = 'no data to analise yet'
+
+    #
+    # allUsersInCountries = UserData.objects.values('country_title').annotate(total = Count('country_title'))
+    #
+    # df = pd.DataFrame(allUsersInCountries)
+    # fig1 = px.scatter_geo(df, locations="country_title",hover_name="country_title", size="total",projection="natural earth")
+    # fig1 = fig1.to_html()
+
+
+    return render(request,'visualisationAge.html',{'circleDiagram':circleDiagram,'allUsersAgeFilteredSorted':allUsersAgeFilteredSorted,'fig':fig,})
+
+def visualisationNames(request):
+
+    menData = UserData.objects.filter(sex = 2).values('first_name').annotate(total = Count('first_name')).order_by('-total')
+    womenData = UserData.objects.filter(sex = 1).values('first_name').annotate(total = Count('first_name')).order_by('-total')
+
+    if menData:
+        df = pd.DataFrame(menData.values('first_name','total')[:10])
+        circleDiagramMen = px.pie(
             data_frame = df,
             values = 'total',#размер куска круга
-            names = 'age',
-            color = 'age',
+            names = 'first_name',
+            color = 'first_name',
         )
-        circleDiagram = circleDiagram.to_html()
+        circleDiagramMen = circleDiagramMen.to_html()
     else:
-        circleDiagram = 'no data to analise yet'
+        circleDiagramMen = 'no data to analise yet'
 
-    df = pd.DataFrame(allUsersAgeFiltered)
-    fig = px.bar(df,x='age',y='total')
-    fig.update_xaxes(type='category')
-    fig = fig.to_html()
+    if womenData:
+        df = pd.DataFrame(womenData.values('first_name','total')[:10])
+        circleDiagramWomen = px.pie(
+            data_frame = df,
+            values = 'total',#размер куска круга
+            names = 'first_name',
+            color = 'first_name',
+        )
+        circleDiagramWomen = circleDiagramWomen.to_html()
+    else:
+        circleDiagramWomen = 'no data to analise yet'
 
-    # df = px.allUsersAgeFilteredSorted.tips()
-    # fig = px.bar(allUsersAgeFilteredSorted,x = 'age',y = 'total')
-    # fig = fig.to_html()
 
-
-    return render(request,'visualisationAge.html',{'circleDiagram':circleDiagram,'allUsersAgeFilteredSorted':allUsersAgeFilteredSorted,'fig':fig})
+    return render(request,'visualisationNames.html',{'circleDiagramMen':circleDiagramMen,'circleDiagramWomen':circleDiagramWomen,'womenData':womenData,'menData':menData,})

@@ -5,19 +5,19 @@
 {% endblock %}
 
 {% block content %}
+  <div class="fig">
+    {% if fig %}
+      {{ fig | safe }}
+    {% else %}
+      <p>no data right now,load more</p>
+    {% endif%}
+  </div>
   <div class="title">
     <h1>top 5 most spreaded ages in VK</h1>
   </div>
   <div class="circleDiagram">
     {% if circleDiagram %}
       {{ circleDiagram | safe }}
-    {% else %}
-      <p>no data right now,load more</p>
-    {% endif%}
-  </div>
-  <div class="fig">
-    {% if fig %}
-      {{ fig | safe }}
     {% else %}
       <p>no data right now,load more</p>
     {% endif%}
@@ -41,5 +41,4 @@
       {% endfor %}
     </table>
   </div>
-  {{allUsersAge}}
 {% endblock%}

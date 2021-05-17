@@ -37,6 +37,13 @@
         статистика пользователей по возрасту
       </form>
       <br>
+      <form action="{% url 'visualisationNames' %}" method="post">
+        {% csrf_token %}
+        <button>user's statictic by names<br></button>
+        статистика пользователей по именам
+      </form>
+      <br>
+      <p>total db users: {{allUsersInDB}}</p>
       <div class="users_data">
         {% for user in userData %}
           <a href="{% url 'extendedInfo' pk=user.pk %}">
@@ -46,5 +53,4 @@
         {% endfor %}
       </div>
       можно нажать на имя любого пользователя и вас перенаправит на страницу с подробной информацией о нём
-      {{bigId.first_name}}
 {% endblock %}
