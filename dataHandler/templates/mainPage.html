@@ -3,44 +3,63 @@
   Data analyser ^_^
 {% endblock %}
 
+{% block head %}
+<script type="text/javascript">
+  function remove(el) {
+    var element = el;
+    //I have also tried using document.getElementByID(this.id)
+    element.remove();
+    //I have also tried using element.parentNode.removeChild(element); to remove the element.
+  }
+</script>
+{% endblock %}
+
 {% block content %}
     <div class="main">
-      <form action="{% url 'loadUserData' %}" method="post">
+      <!-- <form  action="{% url 'loadUserData' %}" method="post">
         {% csrf_token %}
         <button>Start loading data</button>
         Начало загрузки данных пользователей Вконтакте в базу данных,процесс выолнения можно увидеть в командной строке(пока реализовано на кнопке)
         <br>
         Изменение данных в списке происходит по мере обновления страницы, аналогично и со статистикой
       </form>
+      <br> -->
+      <div class="dataForm">
+        <form action="{% url 'loadUserDataLimited' %}" method="POST">
+          {% csrf_token %}
+          {{form.as_p}}
+          <button>add data</button>
+        </form>
+      </div>
       <br>
       <form action="{% url 'visualisation' %}" method="post">
         {% csrf_token %}
         <button>user's statictic by cities<br></button>
-        статистика пользователей по городам
+        <br>статистика пользователей по городам
       </form>
       <br>
       <form action="{% url 'visualisationCountries' %}" method="post">
         {% csrf_token %}
         <button>user's statictic by countries<br></button>
-        статистика пользователей по странам
+        <br>статистика пользователей по странам
       </form>
       <br>
       <form action="{% url 'visualisationSex' %}" method="post">
         {% csrf_token %}
         <button>user's statictic by gender<br></button>
-        статистика пользователей по полу
+        <br>статистика пользователей по полу
       </form>
       <br>
       <form action="{% url 'visualisationAge' %}" method="post">
         {% csrf_token %}
         <button>user's statictic by age<br></button>
-        статистика пользователей по возрасту
+        <br>статистика пользователей по возрасту
       </form>
       <br>
       <form action="{% url 'visualisationNames' %}" method="post">
         {% csrf_token %}
         <button>user's statictic by names<br></button>
-        статистика пользователей по именам
+        <br>статистика пользователей по именам
       </form>
       <br>
       <p>total db users: {{allUsersInDB}}</p>

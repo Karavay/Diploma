@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form  action="{% url 'loadUserData' %}" method="post">
+    {% csrf_token %}
+    <button>Start loading data</button>
+    Начало загрузки данных пользователей Вконтакте в базу данных,процесс выолнения можно увидеть в командной строке(пока реализовано на кнопке)
+    <br>
+    Изменение данных в списке происходит по мере обновления страницы, аналогично и со статистикой
+  </form>
+  <br>
+  <div class="dataForm">
+    <form class="addData" action="{% url 'loadUserDataLimited' %}" method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button>add data</button>
+    </form>
+  </div>
+{% endblock %}

@@ -10,4 +10,6 @@ urlpatterns = [
     path('visualisationSex',views.visualisationSex,name='visualisationSex'),
     path('visualisationAge',views.visualisationAge,name='visualisationAge'),
     path('visualisationNames',views.visualisationNames,name='visualisationNames'),
+    path('technical',views.technical,name='technical'),
+    path('loadUserDataLimited',views.loadUserDataLimited,name='loadUserDataLimited'),
 ]

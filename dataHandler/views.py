@@ -19,13 +19,17 @@ from django.db.models import Count
 
 from django.utils import timezone
 
+from .forms import DataForm
+
 def mainPage(request):
 
     userData = UserData.objects.order_by('-received_date')[:1000]
 
     allUsersInDB = UserData.objects.all().count()
 
-    return render(request,'mainPage.html',{'userData':userData,'allUsersInDB':allUsersInDB,})
+    form = DataForm()
+
+    return render(request,'mainPage.html',{'userData':userData,'allUsersInDB':allUsersInDB,'form':form})
 
 def loadOneUserData(param):# function that makes api request,param = id of vk user,we use this func in another function
 
@@ -72,12 +76,12 @@ def loadOneUserData(param):# function that makes api request,param = id of vk us
 def loadUserData(request):
 
     s = sched.scheduler(time.time,time.sleep)
-    user_id = 234710
+    userData1 =int(UserData.objects.order_by('-received_date')[0].id) + 1
 
     while True:
-        s.enter(0.5,0.5,loadOneUserData,(user_id,))
+        s.enter(0.5,0.5,loadOneUserData,(userData1,))
         s.run()
-        user_id += 1
+        userData1 += 1
 
 
     return redirect('mainPage')
@@ -245,3 +249,29 @@ def visualisationNames(request):
 
 
     return render(request,'visualisationNames.html',{'circleDiagramMen':circleDiagramMen,'circleDiagramWomen':circleDiagramWomen,'womenData':womenData,'menData':menData,})
+
+def technical(request):
+
+    form = DataForm()
+
+    return render(request,'technical.html',{'form':form,})
+
+def loadUserDataLimited(request):
+
+
+    if request.method == 'POST':
+        form = DataForm(request.POST)
+        if form.is_valid():
+
+            amountOfUsers =int( form.cleaned_data.get('amountOfUsers'))
+            userData1 =int(UserData.objects.order_by('-received_date')[0].id) + 1
+            userData2 = userData1 + amountOfUsers
+
+            s = sched.scheduler(time.time,time.sleep)
+
+            while userData1 < userData2:
+                s.enter(0.5,0.5,loadOneUserData,(userData1,))
+                s.run()
+                userData1 +=1
+
+    return redirect('mainPage')

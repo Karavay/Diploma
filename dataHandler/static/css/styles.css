@@ -65,3 +65,9 @@ h1 {
   margin-right: auto;
   overflow-y: scroll;
 } */
+
+.dataForm{
+  padding:2px;
+  border: 2px solid black ;
+  width:105px;
+}
