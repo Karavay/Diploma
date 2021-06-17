@@ -15,6 +15,9 @@
       <p>no data right now,load more</p>
     {% endif%}
   </div>
+  <!-- {{allCities}}
+  {{usersInOtherCities}}
+  {{allUsersInCities}} -->
   <div class="cityStatistics">
     <table class ="tableStatistics" border = '1'>
       <caption>all cities by users in 'em</caption>
@@ -23,7 +26,7 @@
         <th>Population</th>
       </tr>
       {% for i in allUsersInCities %}
-        {% if i.total != 0 %}
+        {% if i.total != 0 and i.city_title != "" %}
           <tr>
             <td>{{i.city_title}}</td>
             <td>{{i.total}}</td>

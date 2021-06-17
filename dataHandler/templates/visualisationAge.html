@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+  <h1>ages of VK users</h1>
   <div class="fig">
     {% if fig %}
       {{ fig | safe }}
@@ -40,5 +41,13 @@
         no data right now,load more
       {% endfor %}
     </table>
+  </div>
+  <h1>months of VK users birthdays</h1>
+  <div class="figMonth">
+    {% if figMonth %}
+      {{ figMonth | safe }}
+    {% else %}
+      <p>no data right now,load more</p>
+    {% endif%}
   </div>
 {% endblock%}

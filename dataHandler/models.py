@@ -24,6 +24,7 @@ class UserData(models.Model):
     education = models.TextField('education',null = True)
     home_town = models.TextField('home town',null = True)
     received_date = models.DateTimeField('time of receiving data',default = timezone.now())
+    photo = models.TextField('profile photo',null = True)
 
     def __str__(self):
         return self.domain

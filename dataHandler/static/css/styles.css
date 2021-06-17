@@ -9,8 +9,8 @@ h1 {
 }
 
 .circleDiagram{
-  left: -200px;
-  width: 1000px;
+  left: -215px;
+  width: 800px;
   text-align: center;
 }
 
@@ -23,29 +23,32 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   overflow-y: scroll;
+  background-color: white
 }
 
 .tableAgeStatistics{
   display: block;
   position: absolute;
   right:50px;
-  top:500px;
+  top:600px;
   height:450px;
   margin-left: auto;
   margin-right: auto;
   overflow-y: scroll;
+  background-color: white
 }
 
 .tableWomenNamesStatistics{
   display: block;
   position:absolute;
   right:50px;
-  top:550px;
+  top:630px;
   width: 185px;
   height:450px;
   margin-left: auto;
   margin-right: auto;
   overflow-y: scroll;
+  background-color: white
 }
 /*
 .tableCityStatistics {
@@ -68,6 +71,56 @@ h1 {
 
 .dataForm{
   padding:2px;
-  border: 2px solid black ;
-  width:105px;
+  border: 2px solid grey ;
+  width:200px;
+  margin-top: 5px;
+}
+
+.photoCollage {
+  width:432px;
+  height:500px;
+  border: solid 3px grey;
+  position:absolute;
+  top: 200px;
+  right: 350px;
+  margin-left:-307.5px;
+  overflow:scroll;
+}
+
+.contentImg{
+  width:90px;
+  height:120px;
+  margin: 5px;
+}
+
+.contentImg:hover{
+  opacity: 0.5;
+}
+.photoCollageTitle{
+  position:absolute;
+  top: 140px;
+  right: 430px;
+}
+
+body{
+  padding-left: 15px;
+  background-color: lightgrey;
+}
+
+ .mainPageButton{
+   color: white;
+   background-color: #ff9400;
+   height: 50px;
+   width: 150px;
+   border: 2px solid grey;
+ }
+
+ .mainPageButton:hover{
+   background-color: #ffbc5e;
+ }
+
+.mainPageTitle{
+  background-color: #ff9400;
+  margin-top: 0;
+  padding: 20px 20px 20px 40px;
 }

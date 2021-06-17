@@ -1,18 +1,62 @@
-from datetime import date
-data = {'response': [{'first_name': 'Павел', 'id': 1, 'last_name': 'Дуров', 'sex': 2, 'bdate': '10.10.1984', 'city': {'id': 2, 'title': 'Санкт-Петербург'}, 'status': '道德經'}]}
+# # import asyncio
+# #
+# # async def kek():
+# #     while True:
+# #         await asyncio.sleep(1)
+# #         print('1 second')
+# #
+# # async def lol():
+# #     while True:
+# #         await asyncio.sleep(5)
+# #         print('5 seconds')
+# #
+# # async def gather(){
+# #     kek()
+# # }
+# #
+# # asyncio.run(gather())
 #
 #
-# a = {'response': [{'first_name': 'DELETED', 'id': 3, 'last_name': '', 'deactivated': 'deleted', 'sex': 0}]}
-
-def calculate_age(data):
-
-    bd = (data.get('response')[0].get('bdate')).split('.')
-    if len(bd) == 3:
-        today = date.today()
-
-        return today.year - int(bd[2]) - ((today.month, today.day) < (int(bd[1]), (int(bd[0]))))#interesting solution))
-
-l = []
-l['kek'] = calculate_age(data)
-l['lol'] = calculate_age(data)
-print(l)
+# import asyncio
+#
+#
+# async def count(counter):
+#     print(f"Количество записей в списке {len(counter)}")
+#     while True:
+#         await asyncio.sleep(1 / 1000)
+#         counter.append(1)
+#
+#
+# async def print_every_sec(counter):
+#     while True:
+#         await asyncio.sleep(1)
+#         print(f'- 1 секунда прошла. '
+#               f'Количество записей в списке: {len(counter)}')
+#
+#
+# async def print_every_5_sec():
+#     while True:
+#         await asyncio.sleep(5)
+#         print(f'---- 5 секунд прошло')
+#
+#
+# async def print_every_10_sec():
+#     while True:
+#         await asyncio.sleep(10)
+#         print(f'---------- 10 секунд прошло')
+#
+#
+# async def main():
+#     counter = list()
+#     tasks = [
+#         count(counter),
+#         print_every_sec(counter),
+#         print_every_5_sec(),
+#         print_every_10_sec()
+#     ]
+#     await asyncio.gather(*tasks)
+#
+#
+# asyncio.run(main())
+l = [1,2,3,4,5,6,7]
+print(l[2:])

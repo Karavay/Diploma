@@ -12,4 +12,5 @@ urlpatterns = [
     path('visualisationNames',views.visualisationNames,name='visualisationNames'),
     path('technical',views.technical,name='technical'),
     path('loadUserDataLimited',views.loadUserDataLimited,name='loadUserDataLimited'),
+    path('printInConsole',views.printInConsole,name='printInConsole'),
 ]

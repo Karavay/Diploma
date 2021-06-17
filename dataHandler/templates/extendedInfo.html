@@ -77,4 +77,8 @@
     Дата получения данных о пользователе: {{userData.received_date}}
     <br>
   {% endif %}
+  {% if userData.photo %}
+    <img src="{{userData.photo}}" alt="">
+    <br>
+  {% endif %}
 {% endblock %}
